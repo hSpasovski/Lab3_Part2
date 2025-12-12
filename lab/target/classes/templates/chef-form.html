@@ -1,0 +1,9 @@
+<h1 th:text="${chef.id} != 0 ? 'Edit Chef' : 'Add Chef'"></h1>
+
+<form th:action="${chef.id} != 0 ? @{'/chefs/edit/' + ${chef.id}} : @{/chefs/add}" method="post">
+    <label>First Name: <input type="text" name="firstName" th:value="${chef.firstName}"/></label><br/>
+    <label>Last Name: <input type="text" name="lastName" th:value="${chef.lastName}"/></label><br/>
+    <label>Bio: <input type="text" name="bio" th:value="${chef.bio}"/></label><br/>
+    <button type="submit">Save</button>
+</form>
+<p><a th:href="@{/chefs}">Back to list</a></p>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${dish.id} != null ? 'Edit Dish' : 'Add Dish'">Dish Form</title>
+</head>
+<body>
+<h1 th:text="${dish.id} != null ? 'Edit Dish' : 'Add Dish'"></h1>
+
+<form th:object="${dish}"
+      th:action="@{${dish.id} != null ? '/dishes/edit/' + ${dish.id} : '/dishes/add'}"
+      method="post">
+
+    <!-- Hidden id ако е edit -->
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Dish ID:</label>
+    <input type="text" th:field="*{dishId}" required />
+
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required />
+
+    <label for="cuisine">Cuisine:</label>
+    <select id="cuisine" th:field="*{cuisine}" required>
+        <option th:each="c : ${T(mk.ukim.finki.wp.lab.model.enums.Cuisine).values()}"
+                th:value="${c}"
+                th:text="${c}"></option>
+    </select>
+
+    <label>Preparation time (min):</label>
+    <input type="number" th:field="*{preparationTime}" min="1" required />
+
+    <label>Chefs:</label>
+    <div th:each="chef : ${chefs}">
+        <input type="checkbox" name="chefIds" th:value="${chef.id}"
+               th:checked="${dish.chefs != null && dish.chefs.contains(chef)}" />
+        <span th:text="${chef.firstName + ' ' + chef.lastName}"></span><br/>
+    </div>
+
+
+
+    <button type="submit">Save</button>
+</form>
+
+<p><a th:href="@{/dishes}">Back to list</a></p>
+</body>
+</html>

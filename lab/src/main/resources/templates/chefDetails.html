@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Chef Details</title>
+</head>
+<body>
+<h1 th:text="'Chef: ' + ${chef.firstName} + ' ' + ${chef.lastName}"></h1>
+<p th:text="'Bio: ' + ${chef.bio}"></p>
+
+<h2>Dishes prepared by this chef:</h2>
+<ul>
+    <li th:each="dish : ${chef.dishes}">
+        <span th:text="${dish.name} + ' (' + ${dish.cuisine} + ', ' + ${dish.preparationTime} + ' min)'"></span>
+
+        <!-- Delete dish from chef -->
+        <form th:action="@{/chefs/delete-dish}" method="post" style="display:inline;">
+            <input type="hidden" name="chefId" th:value="${chef.id}" />
+            <input type="hidden" name="dishId" th:value="${dish.dishId}" />
+            <button type="submit">Remove</button>
+        </form>
+    </li>
+</ul>
+
+<!-- Add dish to chef -->
+<h2>Add a new dish to this chef:</h2>
+<form th:action="@{/chefs/add-dish}" method="post">
+    <input type="hidden" name="chefId" th:value="${chef.id}" />
+    <select name="dishId">
+        <option th:each="dish : ${dishes}" th:value="${dish.dishId}" th:text="${dish.name} + ' (' + ${dish.cuisine} + ')'"></option>
+    </select>
+    <button type="submit">Add Dish</button>
+</form>
+
+<p><a th:href="@{/chefs}">Back to list of chefs</a></p>
+</body>
+</html>

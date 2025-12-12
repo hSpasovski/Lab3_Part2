@@ -1,0 +1,22 @@
+<h1>Chefs</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Bio</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="chef : ${chefs}">
+        <td th:text="${chef.id}"></td>
+        <td th:text="${chef.firstName} + ' ' + ${chef.lastName}"></td>
+        <td th:text="${chef.bio}"></td>
+        <td>
+            <a th:href="@{'/chefs/details?chefId=' + ${chef.id}}">Details</a>
+            <a th:href="@{'/chefs/form/' + ${chef.id}}">Edit</a>
+            <form th:action="@{'/chefs/delete/' + ${chef.id}}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<p><a th:href="@{/chefs/form}">Add New Chef</a></p>

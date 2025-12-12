@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Add Dish to Chef</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, td, th {
+            border: 1px solid black;
+            padding: 10px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        section {
+            float: left;
+            margin: 0 1.5%;
+            width: 63%;
+        }
+        aside {
+            float: right;
+            margin: 0 1.5%;
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Select the Dish to add to the Chef</h1>
+</header>
+<section>
+    <h2>Select dish:</h2>
+    <form th:action="@{/servlet/chefDetails}" method="post">
+        <input type="hidden" name="chefId" th:value="${chef.id}" />
+        <div th:each="dish : ${dishes}">
+            <input type="radio" name="dishId" th:value="${dish.dishId}" />
+            <span th:text="${dish.name} + ' (' + ${dish.cuisine} + ', ' + ${dish.preparationTime} + ' min)'"></span><br/>
+        </div>
+        <input type="submit" value="Add dish" />
+    </form>
+
+    <h3>Selected Chef: <span th:text="${chef.firstName} + ' ' + ${chef.lastName}"></span></h3>
+
+</section>
+<aside>
+    <table>
+        <tr>
+            <td><b>Chef ID</b></td>
+            <td th:text="${chef.id}"></td>
+        </tr>
+        <tr>
+            <td><b>Chef Name</b></td>
+            <td th:text="${chef.firstName} + ' ' + ${chef.lastName}"></td>
+        </tr>
+    </table>
+</aside>
+
+</body>
+</html>
